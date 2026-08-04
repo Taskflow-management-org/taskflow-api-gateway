@@ -1,0 +1,21 @@
+# IDE & Editor Files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Build & Target Directories
+target/
+build/
+*.jar
+*.war
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Logs & Environment Configs
+*.log
+.env

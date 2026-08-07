@@ -41,10 +41,13 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: 'maven'
+
+      - name: Grant Execute Permission for Maven Wrapper
+        run: chmod +x mvnw
 
       - name: Build JAR File
-        run: ./mvnw clean package -DskipTests
+        run: ./mvnw clean verify
 
       - name: Log in Docker Hub
         uses: docker/login-action@v3

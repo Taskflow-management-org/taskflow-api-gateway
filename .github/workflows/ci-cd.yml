@@ -78,7 +78,7 @@ jobs:
           key: ${{secrets.EC2_SSH_KEY}}
           script: |
             cd ~/app
-            if [ -f docker-compose.app.yml ]; then
+            if [ -f docker-compose-app.yml ]; then
                           echo "Pulling latest api-gateway image..."
                           docker compose -f docker-compose-app.yml pull api-gateway
 

@@ -63,3 +63,21 @@ jobs:
           tags: |
             ${{secrets.DOCKERHUB_USERNAME}}/taskflow-api-gateway:latest
             ${{secrets.DOCKERHUB_USERNAME}}/taskflow-api-gateway:${{github.sha}}
+
+  cd-deploy:
+    needs: docker-build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy to AWS EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.EC2_HOST}}
+          username: ubuntu
+          key: ${{secrets.EC2_SSH_KEY}}
+          script: |
+            cd ~/app
+            docker compose -f docker-compose.app.yml pull api-gateway
+            docker compose -f docker-compose.app.yml up -d api-gateway
+            docker system prune -f
